@@ -7,58 +7,73 @@ BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 WHITE='\033[0;37m'
+RESET='\033[0m'
+
+UKNOWN="[????]"
+GEOBOT="[GeoBot_0773]"
 
 clear
 
-str="[????]: Salve esploratore, io sono GeoBot. Creato per guidarti attraverso una straordinaria avventura intorno al mondo. Il mio compito è mettere alla prova la tua abilità di navigazione attraverso i continenti e le loro meraviglie nascoste."
+print_animated() {
+    local message=$1
+	local color=$2
+	printf "%b" "$color"
+    while IFS= read -r -n1 var;
+	do
+        printf '%s' "$var"
+        sleep 0.015
+    done <<< "$message"
+	printf "%b" "$RESET"
+}
 
-while IFS= read -r -n1 var
-do
-	printf '%s' "$var"
-	sleep 0.015
-done <<< "$str"
+print_animated "$UKNOWN" "$RED"
+
+str=": Salve esploratore, io sono GeoBot_0773. Creato per guidarti attraverso una straordinaria avventura intorno al mondo. Il mio compito è mettere alla prova la tua abilità di navigazione attraverso i continenti e le loro meraviglie nascoste."
+print_animated "$str" "$WHITE"
 
 echo
-sleep 0.03
-echo
-
 sleep 0.5
-
-str="[GeoBot]: La tua missione, se sceglierai di accettarla, sarà quella di trovare la Chiave del Mondo, suddivisa in alcuni dei luoghi più famosi sparsi per il globo. Per riuscirci, dovrai far affidamento sulle tue conoscenze geografiche e sulla tua capacità di decifrare gli indizi che ti saranno forniti lungo il cammino."
-
-while IFS= read -r -n1 var
-do
-	printf '%s' "$var"
-	sleep 0.015
-done <<< "$str"
-
-echo
-sleep 0.03
 echo
 
+print_animated "$GEOBOT" "$GREEN"
+
+str=": La tua missione, se sceglierai di accettarla, sarà quella di trovare la Chiave del Mondo, una serie di numeri e lettere, suddivisa in alcuni dei luoghi più famosi sparsi per il globo. Per riuscirci, dovrai far affidamento sulle tue conoscenze geografiche e sulla tua capacità di decifrare gli indizi che ti saranno forniti lungo il cammino."
+print_animated "$str" "$WHITE"
+
+echo
 sleep 0.5
-
-str="[GeoBot]: Il primo passo di questa caccia al tesoro globale è consultare la directory dei continenti. Qui, nascosti in piena vista, troverai gli indizi che celano le parti della chiave. Ricorda: ciascun continente nasconde un pezzo del puzzle che ti avvicinerà alla soluzione del livello. Quando ti chiederò di inserire la soluzione, ricordati di inserire i caratteri seguendo l'ordine alfabetico dei continenti in cui li hai trovati."
-while IFS= read -r -n1 var
-do
-	printf '%s' "$var"
-	sleep 0.015
-done <<< "$str"
-
-echo
-sleep 0.03
 echo
 
-str="[GeoBot]: In bocca al lupo, e che la tua bussola interna ti guidi saggiamente!"
+print_animated "$GEOBOT" "$GREEN"
 
-while IFS= read -r -n1 var
-do
-	printf '%s' "$var"
-	sleep 0.015
-done <<< "$str"
+str=": Il primo passo di questa caccia al tesoro globale è consultare la directory dei continenti. Qui, nascosti in piena vista troverai indizi che celano le parti della chiave. Ricorda: ciascun continente nasconde un pezzo del puzzle che ti avvicinerà alla soluzione del livello. Quando ti chiederò di inserire la soluzione, inserisci i caratteri seguendo l'ordine alfabetico dei continenti in cui li hai trovati."
+print_animated "$str" "$WHITE"
 
 echo
-sleep 0.03
+sleep 0.5
 echo
 
-ls
+print_animated "$GEOBOT" "$GREEN"
+
+str=": In bocca al lupo, e che la tua bussola interna ti guidi saggiamente!"
+print_animated "$str" "$WHITE"
+
+echo
+sleep 0.5
+echo
+
+output=$(ls)
+TARGET_FOLDER="continenti"
+
+for item in $output; do
+	sleep 0.5
+    if [ "$item" = "$TARGET_FOLDER" ]; then
+        printf "${PURPLE}-> %s <-  ${RESET}" "$item"
+    else
+        printf "%s  " "$item"
+    fi
+done
+
+echo
+sleep 0.5
+echo
